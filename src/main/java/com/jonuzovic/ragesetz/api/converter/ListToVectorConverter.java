@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ListToVectorConverter {
+public class ListToVectorConverter implements IVectorConverter {
 
     public String convertToDatabaseColumn(List<Float> list) {
         if (list == null || list.isEmpty()) return "[]";
