@@ -8,16 +8,24 @@ import java.util.Random;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 class ListToVectorConverterUnitTest {
+	
+	IVectorConverter converter;
+	
+	@Autowired
+	public ListToVectorConverterUnitTest(IVectorConverter converter) {
+		this.converter = converter;
+	}
 
-	ListToVectorConverter converter = new ListToVectorConverter();
+	static final int VECTOR_DIM = 1536;
 
-	private static final int VECTOR_DIM = 1536;
-
-	private static List<Float> asList = new ArrayList<Float>();
-	private static float[] asArray = new float[VECTOR_DIM];
-	private static String asString = new String();
+	static List<Float> asList = new ArrayList<Float>();
+	static float[] asArray = new float[VECTOR_DIM];
+	static String asString = new String();
 
 	@BeforeAll
 	static void setupVectorData() {
