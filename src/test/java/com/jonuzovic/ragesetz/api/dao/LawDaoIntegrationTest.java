@@ -12,11 +12,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.jonuzovic.ragesetz.api.converter.IVectorConverter;
-import com.jonuzovic.ragesetz.api.dao.impl.LawDaoImpl;
 import com.jonuzovic.ragesetz.api.model.Law;
 
 @SpringBootTest
@@ -25,8 +25,14 @@ class LawDaoIntegrationTest {
 	
 	private static final List<Float> EMBEDDING = new ArrayList<>(Collections.nCopies(1536, 0.1f));
 
+	
 	@Autowired
-    private LawDaoImpl lawDao;
+	@Qualifier("lawDao")
+	IEmbeddingDataAccessObject embeddingDataAccessObject;
+	
+	@Autowired
+	@Qualifier("lawDao")
+	IDataAccessObject accessObject;
 
     @Autowired
     private IVectorConverter converter;
@@ -34,12 +40,12 @@ class LawDaoIntegrationTest {
     @BeforeEach
     @AfterEach
     void setup() {
-        lawDao.deleteAll();
+    	accessObject.deleteAll();
     }
 
     @Test
     void testIsTableEmptyInitially() {
-        boolean empty = lawDao.isTableEmpty();
+        boolean empty = embeddingDataAccessObject.isTableEmpty();
         assertThat(empty).isTrue();
     }
 
@@ -53,20 +59,20 @@ class LawDaoIntegrationTest {
         law.setLawEmbedding(EMBEDDING);
         law.setSourceUrl("https://example.com/law");
 
-        lawDao.create(law);
+        accessObject.create(law);
 
-        List<Law> all = lawDao.getAllEmbeddings();
+        List<Law> all = embeddingDataAccessObject.getAllEmbeddings();
         assertThat(all).hasSize(1);
 
-        Optional<Law> found = lawDao.findById(all.getFirst().getId());
+        Optional<Law> found = accessObject.findById(all.getFirst().getId());
         assertThat(found).isPresent();
         assertThat(found.get().getLawCode()).isEqualTo("CIV-001");
     }
 
     @Test
     void testDeleteAll() {
-        lawDao.deleteAll();
-        assertThat(lawDao.isTableEmpty()).isTrue();
+    	accessObject.deleteAll();
+        assertThat(embeddingDataAccessObject.isTableEmpty()).isTrue();
     }
 
     void testCreateFindAndDeleteByIdWork() {
@@ -78,9 +84,9 @@ class LawDaoIntegrationTest {
         law.setLawEmbedding(EMBEDDING);
         law.setSourceUrl("https://example.com/law");
         
-        Long id = lawDao.create(law);
+        Long id = accessObject.create(law);
         
-        Optional<Law> found = lawDao.findById(id);
+        Optional<Law> found = accessObject.findById(id);
         Law foundLaw = found.orElse(null);
         assertThat(foundLaw).isNotNull();
         assertThat(foundLaw.getId()).isEqualTo(id);
@@ -90,8 +96,8 @@ class LawDaoIntegrationTest {
 
 
         
-        Long deletedId = lawDao.deleteById(id);
-        assertThat(lawDao.isTableEmpty()).isTrue();
+        Long deletedId = accessObject.deleteById(id);
+        assertThat(embeddingDataAccessObject.isTableEmpty()).isTrue();
         assertThat(foundLaw.getId()).isEqualTo(deletedId);
     }
     
@@ -106,15 +112,15 @@ class LawDaoIntegrationTest {
         oldLaw.setLawEmbedding(EMBEDDING);
         oldLaw.setSourceUrl("none");
 
-        lawDao.create(oldLaw);
-        assertThat(lawDao.isTableEmpty()).isFalse();
+        accessObject.create(oldLaw);
+        assertThat(embeddingDataAccessObject.isTableEmpty()).isFalse();
 
         // delete older than today
         Date today = new Date(System.currentTimeMillis());
         Date tomorrow = new Date(today.getTime() + (1000 * 60 * 60 * 24));
-        lawDao.deleteOlderThan(tomorrow);
+        embeddingDataAccessObject.deleteOlderThan(tomorrow);
 
-        assertThat(lawDao.isTableEmpty()).isTrue();
+        assertThat(embeddingDataAccessObject.isTableEmpty()).isTrue();
     }
     
     @Test
@@ -123,12 +129,12 @@ class LawDaoIntegrationTest {
         List<Float> nearEmbedding = new ArrayList<>(Collections.nCopies(1536, 0.1f));
         List<Float> farEmbedding = new ArrayList<>(Collections.nCopies(1536, 5.0f));
 
-        lawDao.create(buildLaw("LAW-1", baseEmbedding));
-        lawDao.create(buildLaw("LAW-2", nearEmbedding));
-        lawDao.create(buildLaw("LAW-3", farEmbedding));
+        accessObject.create(buildLaw("LAW-1", baseEmbedding));
+        accessObject.create(buildLaw("LAW-2", nearEmbedding));
+        accessObject.create(buildLaw("LAW-3", farEmbedding));
 
         List<Float> queryEmbedding = new ArrayList<>(Collections.nCopies(1536, 0.05f));
-        List<Law> results = lawDao.findRelevantEmbeddings(queryEmbedding, 3);
+        List<Law> results = embeddingDataAccessObject.findRelevantEmbeddings(queryEmbedding, 3);
 
         assertThat(results).hasSize(3);
         assertThat(results.get(0).getLawCode()).isEqualTo("LAW-1");
