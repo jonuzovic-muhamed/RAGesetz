@@ -1,0 +1,16 @@
+spring:
+  ai:
+    ollama:
+      base-url: ${OLLAMA_URL}
+      chat:
+        model: ${OLLAMA_LLM}
+      embedding:
+        model: ${OLLAMA_EMBEDDING_MODEL}
+  datasource:
+    url: ${DB_URL_TEST}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driverClassName: ${DB_DRIVER}
+  sql:
+    init:
+      mode: never
