@@ -19,7 +19,7 @@ import lombok.Setter;
 public class Law {
 	private Long id;
 	private String lawCode;
-	private String sectionNumber;
+	private String lawSectionNumber;
 	private String lawTitle;
 	private String lawContent;
 	private List<Float> lawEmbedding;
