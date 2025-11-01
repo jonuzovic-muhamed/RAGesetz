@@ -19,7 +19,7 @@ class ListToVectorConverterUnitTest {
 	IVectorConverter converter;
 	
 	@Autowired
-	public ListToVectorConverterUnitTest(IVectorConverter converter) {
+	ListToVectorConverterUnitTest(IVectorConverter converter) {
 		this.converter = converter;
 	}
 

@@ -25,8 +25,7 @@ import com.jonuzovic.ragesetz.core.repository.IEmbeddingRepository;
 @ActiveProfiles("test")
 class LawDaoIntegrationTest {
 	
-	private static final List<Float> EMBEDDING = new ArrayList<>(Collections.nCopies(1536, 0.1f));
-
+	static final List<Float> EMBEDDING = new ArrayList<>(Collections.nCopies(1536, 0.1f));
 	
 	@Autowired
 	@Qualifier("lawDao")
@@ -37,7 +36,7 @@ class LawDaoIntegrationTest {
 	ICrudRepository accessObject;
 
     @Autowired
-    private IVectorConverter converter;
+    IVectorConverter converter;
 
     @BeforeEach
     @AfterEach
@@ -143,7 +142,7 @@ class LawDaoIntegrationTest {
         assertThat(results.get(2).getLawCode()).isEqualTo("LAW-3");
     }
 
-    private Law buildLaw(String code, List<Float> embedding) {
+    Law buildLaw(String code, List<Float> embedding) {
         Law law = new Law();
         law.setLawCode(code);
         law.setLawSectionNumber("§" + code);
