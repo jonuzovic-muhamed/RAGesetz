@@ -1,3 +1,6 @@
+### HTML Data Directory ###
+/src/main/resources/data
+
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
