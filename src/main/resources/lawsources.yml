@@ -1,0 +1,14 @@
+law-sources:
+  laws:
+  - code: BGB
+    url: https://www.gesetze-im-internet.de/bgb/BJNR001950896.html
+  - code: GG
+    url: https://www.gesetze-im-internet.de/gg/BJNR000010949.html
+  - code: STGB
+    url: https://www.gesetze-im-internet.de/stgb/BJNR001270871.html
+  - code: HGB
+    url: https://www.gesetze-im-internet.de/hgb/BJNR002190897.html
+  - code: ZPO
+    url: https://www.gesetze-im-internet.de/zpo/BJNR005330950.html
+  - code: STPO
+    url: https://www.gesetze-im-internet.de/stpo/BJNR006290950.html
