@@ -18,6 +18,7 @@ public class OllamaEmbeddingService implements IEmbeddingService {
         this.embeddingModel = embeddingModel;
     }
 
+    @Override
     public List<Float> embedText(String text) {
         float[] result = embeddingModel.embed(text);
         List<Float> embedding = new ArrayList<>();
