@@ -4,7 +4,7 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.stereotype.Service;
 
-import com.jonuzovic.ragesetz.core.model.Law;
+import com.jonuzovic.ragesetz.api.dto.LawDto;
 import com.jonuzovic.ragesetz.core.service.ILlmService;
 
 @Service("ollamaLlmService")
@@ -39,7 +39,7 @@ public class OllamaLlmService implements ILlmService {
 	}
 
 	@Override
-	public String explainLaw(Law law) {
+	public String explainLaw(LawDto law) {
 		return null;
 	}
 
