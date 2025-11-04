@@ -18,11 +18,17 @@ public class OllamaLlmService implements ILlmService {
     }
 
 	@Override
-	public String askAbout(String userQuestion, String relevantContext) {
+	public String chat(String message) {
+		 ChatResponse response = chatClient.prompt()
+		            .user(message)
+		            .call()
+		            .chatResponse();
+        return response == null ? "Entschuldigung, die Frage könnte nicht beantworter werden. Bitte Frage nochmal!" : response.getResult().getOutput().getText();
+	}
+
+	@Override
+	public String askAboutLaw(String userQuestion, String relevantContext) {
 		String prompt = """
-	            Du bist ein assistent fuer Fragen zur Deutschen Gesetzen.
-	            Basieren auf den gefundenen relevanten Daten aus der Gesetzesdatenbank,benatworte die Frage des Nutzers.
-	            
 	            Relevante Gesetzesdaten:
 	            %s
 	            
@@ -35,7 +41,7 @@ public class OllamaLlmService implements ILlmService {
             .call()
             .chatResponse();
 
-        return response == null ? askAbout(userQuestion, relevantContext) : response.getResult().getOutput().getText();
+        return response == null ? askAboutLaw(userQuestion, relevantContext) : response.getResult().getOutput().getText();
 	}
 
 	@Override
