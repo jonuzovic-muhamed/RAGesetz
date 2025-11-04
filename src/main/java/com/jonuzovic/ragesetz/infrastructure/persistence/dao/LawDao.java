@@ -116,7 +116,7 @@ public class LawDao implements IEmbeddingRepository, ICrudRepository {
         String sql = """
                 SELECT law_id, law_code, law_section_number, law_title, law_content, law_embedding, source_url, created_at
                 FROM embeddings.law
-                ORDER BY law_embedding <-> CAST(? AS vector)
+                ORDER BY law_embedding <=> CAST(? AS vector)
                 LIMIT ?;
                 """;
 
