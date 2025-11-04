@@ -1,14 +1,42 @@
 law-sources:
   laws:
-  - code: BGB
+  - code: Bürgerliches Gesetzbuch (BGB)
     url: https://www.gesetze-im-internet.de/bgb/BJNR001950896.html
-  - code: GG
+  - code: Grundgesetz (GG)
     url: https://www.gesetze-im-internet.de/gg/BJNR000010949.html
-  - code: STGB
+  - code: Strafgesetzbuch (StGB)
     url: https://www.gesetze-im-internet.de/stgb/BJNR001270871.html
-  - code: HGB
+  - code: Handelsgesetzbuch (HG)
     url: https://www.gesetze-im-internet.de/hgb/BJNR002190897.html
-  - code: ZPO
+  - code: Zivilprozessordnung (ZPO)
     url: https://www.gesetze-im-internet.de/zpo/BJNR005330950.html
-  - code: STPO
+  - code: Strafprozessordnung (SPO)
     url: https://www.gesetze-im-internet.de/stpo/BJNR006290950.html
+  - code: Einkommensteuergesetz (EStG)
+    url: https://www.gesetze-im-internet.de/estg/BJNR010050934.html
+  - code: Straßenverkehrsgesetz (StVG)
+    url: https://www.gesetze-im-internet.de/stvg/BJNR004370909.html
+  - code: Straßenverkehrsordnung (StVO)
+    url: https://www.gesetze-im-internet.de/stvo_2013/BJNR036710013.html
+  - code: Gleichbehandlungsgesetz (AGG)
+    url: https://www.gesetze-im-internet.de/agg/BJNR189710006.html
+  - code: Datenschutzgesetz (BDSG)
+    url: https://www.gesetze-im-internet.de/bdsg_2018/BJNR209710017.html
+  - code: Verwaltungsverfahrensgesetz (VwVfG)
+    url: https://www.gesetze-im-internet.de/vwvfg/BJNR012530976.html
+  - code: Verwaltungsgerichtsordnung (VwGO)
+    url: https://www.gesetze-im-internet.de/vwgo/BJNR000170960.html
+  - code: Abgabenordnung (AO)
+    url: https://www.gesetze-im-internet.de/ao_1977/BJNR006130976.html
+  - code: Wohneigentumsgesetz (WEG)
+    url: https://www.gesetze-im-internet.de/woeigg/BJNR001750951.html
+  - code: Produkthaftungsgesetz (ProdHaftG)
+    url: https://www.gesetze-im-internet.de/prodhaftg/BJNR021980989.html
+  - code: Urheberrechtsgesetz (UrhG)
+    url: https://www.gesetze-im-internet.de/urhg/BJNR012730965.html
+  - code: Markengesetz (MarkenG)
+    url: https://www.gesetze-im-internet.de/markeng/BJNR308210994.html
+  - code: Patentgesetz (PatG)
+    url: https://www.gesetze-im-internet.de/patg/BJNR201170936.html
+  - code: Gewerbeordnung (GewO)
+    url: https://www.gesetze-im-internet.de/gewo/BJNR002450869.html
