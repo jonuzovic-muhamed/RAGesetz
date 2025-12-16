@@ -10,15 +10,17 @@ import java.util.List;
 @Component
 public class ListToVectorConverter implements IVectorConverter {
 
+    private static final int EMBEDDING_SIZE = 1024;
+
     public String convertToDatabaseColumn(List<Float> list) {
         if (list == null || list.isEmpty()) return "[]";
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("[");
         for (int i = 0; i < list.size(); i++) {
-        	if (i == list.size() - 1) {
+            if (i == list.size() - 1) {
                 stringBuilder.append(list.get(i));
                 break;
-        	}
+            }
             stringBuilder.append(list.get(i));
             stringBuilder.append(",");
         }
@@ -28,21 +30,21 @@ public class ListToVectorConverter implements IVectorConverter {
 
     public List<Float> convertToEntityAttribute(String dbData) {
         if ("[]".equals(dbData) || dbData == null || dbData.isBlank()
-        		|| !dbData.startsWith("[") || !dbData.endsWith("]") || dbData.contains(",,")) 
-        	return List.of();
-        
+                || !dbData.startsWith("[") || !dbData.endsWith("]") || dbData.contains(",,"))
+            return List.of();
+
         String cleaned = dbData.replace("[", "").replace("]", "");
         String[] parts = cleaned.split(",");
-        
-        if (parts.length != 1536) {
-        	return List.of();
+
+        if (parts.length != EMBEDDING_SIZE) {
+            return List.of();
         }
-        
+
         List<Float> result = new ArrayList<>();
         for (String part : parts) {
             result.add(Float.parseFloat(part.trim()));
         }
-        
+
         return result;
     }
 }
