@@ -34,16 +34,20 @@ public class LawEmbedderStartupRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		log.info("Started embedding process!");
-		long startTime = System.currentTimeMillis();
-		lawParser.downloadLawsFromSources();
-		List<Law> laws = lawParser.parseDownloadedLaws();
-		lawEmbedder.embedLaws(laws);
-		long endTime = System.currentTimeMillis();
-		long[] runtimeDuration = calculateRuntime(startTime, endTime);
-		log.info("Finished embedding process in {}h {}m {}s {}ms", runtimeDuration[0], runtimeDuration[1], runtimeDuration[2], runtimeDuration[3]);
+        if (embeddingRepository.isTableEmpty()){
+            log.info("Started embedding process!");
+            long startTime = System.currentTimeMillis();
+            lawParser.downloadLawsFromSources();
+            List<Law> laws = lawParser.parseDownloadedLaws();
+            lawEmbedder.embedLaws(laws);
+            long endTime = System.currentTimeMillis();
+            long[] runtimeDuration = calculateRuntime(startTime, endTime);
+            log.info("Finished embedding process in {}h {}m {}s {}ms", runtimeDuration[0], runtimeDuration[1], runtimeDuration[2], runtimeDuration[3]);
+        } else {
+            log.info("Embedding process not possible, the embedding table contains data! If you wish to create new embeddings empty the table and restart the application.");
+        }
 	}
-	
+
 	private long[] calculateRuntime(long startTime, long endTime) {
 		long duration = endTime - startTime;
 		long hours   = (duration / (1000 * 60 * 60)) % 24;
