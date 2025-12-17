@@ -33,7 +33,35 @@ public class OllamaLlmService implements ILlmService {
 
     @Override
     public LawExplanationResponse explainLaw(String userQuestion, Law law) {
-        return null;
+        try {
+            String prompt = """
+                    You are a law expert for german laws.
+                    Now you need to explain a certain law.
+                    Here follow the users question about the law, and the actual law content.
+                    
+                    User question:
+                    
+                    %s
+                    
+                    Law:
+                    
+                    %s
+                    
+                    Answer in JSON format exactly like this.
+                     "lawCode": "string",
+                     "lawSectionNumber": "string",
+                     "lawTitle": "string",
+                     "lawContent": "string",
+                     "generatedExplanation": "string"
+                    }
+                    """.formatted(userQuestion, law.toString());
+            return lawExpertModelClient.prompt()
+                    .user(prompt)
+                    .call()
+                    .entity(LawExplanationResponse.class);
+        } catch (Exception e) {
+            throw new LlmResponseParsingException(e, userQuestion);
+        }
     }
 
     @Override
