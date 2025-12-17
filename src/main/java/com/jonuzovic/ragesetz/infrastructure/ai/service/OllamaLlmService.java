@@ -28,7 +28,48 @@ public class OllamaLlmService implements ILlmService {
 
     @Override
     public AdviceResponse giveAdvice(String userQuestion, List<Law> relevantLaws) {
-        return null;
+        try {
+            StringBuilder relevantLawsString = new StringBuilder();
+            for (Law law : relevantLaws) {
+                relevantLawsString.append(law.toString());
+            }
+            String prompt = """
+                    You are a law expert for german laws.
+                    This is a RAG Pipeline application. You will also get relevant context from database about users question.
+                    Now you need to give advice to user about certain legal situation.
+                    The user formed the situation in form of a question to you.
+                    Here follow the users question about the law, and the relevant context from vector database.
+                    
+                    User question:
+                    
+                    %s
+                    
+                    Law:
+                    
+                    %s
+                    
+                    Answer in JSON format exactly like this.
+                    {
+                     "generatedAdvice": "string",
+                     "relevantLawsForQuestion": [
+                        {
+                          "lawCode": "string",
+                          "lawSectionNumber": "string",
+                          "lawTitle": "string",
+                          "lawContent": "string",
+                          "sourceUrl": "string"
+                        },
+                        ...
+                     ],
+                    }
+                    """.formatted(userQuestion, relevantLawsString.toString());
+            return lawExpertModelClient.prompt()
+                    .user(prompt)
+                    .call()
+                    .entity(AdviceResponse.class);
+        } catch (Exception e) {
+            throw new LlmResponseParsingException(e, userQuestion);
+        }
     }
 
     @Override
@@ -48,6 +89,7 @@ public class OllamaLlmService implements ILlmService {
                     %s
                     
                     Answer in JSON format exactly like this.
+                    {
                      "lawCode": "string",
                      "lawSectionNumber": "string",
                      "lawTitle": "string",
