@@ -10,10 +10,12 @@ import com.jonuzovic.ragesetz.core.response.RelevanceResponse;
 import com.jonuzovic.ragesetz.core.service.IChatService;
 import com.jonuzovic.ragesetz.core.service.IEmbeddingService;
 import com.jonuzovic.ragesetz.core.service.ILlmService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ChatService implements IChatService {
 
     private static final String LIMIT = System.getenv("LLM_CONTEXT_LIMIT");
