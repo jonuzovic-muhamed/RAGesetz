@@ -3,7 +3,9 @@ package com.jonuzovic.ragesetz.api.mapper.impl;
 import com.jonuzovic.ragesetz.api.dto.LawExplanationResponseDto;
 import com.jonuzovic.ragesetz.api.mapper.DtoMapper;
 import com.jonuzovic.ragesetz.core.response.LawExplanationResponse;
+import org.springframework.stereotype.Component;
 
+@Component("lawExplanationResponseDtoMapper")
 public class LawExplanationResponseDtoMapper implements DtoMapper<LawExplanationResponse, LawExplanationResponseDto> {
 
     @Override

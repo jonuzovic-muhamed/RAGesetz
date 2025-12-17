@@ -5,10 +5,12 @@ import com.jonuzovic.ragesetz.api.dto.LawDto;
 import com.jonuzovic.ragesetz.api.mapper.DtoMapper;
 import com.jonuzovic.ragesetz.core.model.Law;
 import com.jonuzovic.ragesetz.core.response.AdviceResponse;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component("adviceResponseDtoMapper")
 public class AdviceResponseDtoMapper implements DtoMapper<AdviceResponse, AdviceResponseDto> {
     @Override
     public AdviceResponseDto mapToDto(AdviceResponse adviceResponse) {
