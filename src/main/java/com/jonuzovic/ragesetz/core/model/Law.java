@@ -11,7 +11,6 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode
-@ToString(exclude = "id, lawEmbedding, createdAt")
 public class Law {
 	private Long id;
 	private String lawCode;
@@ -21,4 +20,8 @@ public class Law {
 	private List<Float> lawEmbedding;
 	private String sourceUrl;
 	private Timestamp createdAt;
+
+    public String toString () {
+        return "{ " + this.lawCode + " " + this.lawSectionNumber + " " + this.lawTitle + " " + this.lawContent + " " + this.sourceUrl + " }";
+    }
 }
