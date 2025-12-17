@@ -48,25 +48,13 @@ public class OllamaLlmService implements ILlmService {
                     
                     %s
                     
-                    Answer in JSON format exactly like this.
-                    {
-                     "generatedAdvice": "string",
-                     "relevantLawsForQuestion": [
-                        {
-                          "lawCode": "string",
-                          "lawSectionNumber": "string",
-                          "lawTitle": "string",
-                          "lawContent": "string",
-                          "sourceUrl": "string"
-                        },
-                        ...
-                     ],
-                    }
+                    Anwser the question to the user.
                     """.formatted(userQuestion, relevantLawsString.toString());
-            return lawExpertModelClient.prompt()
-                    .user(prompt)
-                    .call()
-                    .entity(AdviceResponse.class);
+            String llmAdvice = lawExpertModelClient.prompt().user(prompt).call().toString();
+            return AdviceResponse.builder()
+                    .generatedAdvice(llmAdvice)
+                    .relevantLawsForQuestion(relevantLaws)
+                    .build();
         } catch (Exception e) {
             throw new LlmResponseParsingException(e, userQuestion);
         }
