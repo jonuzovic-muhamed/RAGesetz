@@ -6,6 +6,7 @@ import com.jonuzovic.ragesetz.core.response.AdviceResponse;
 import com.jonuzovic.ragesetz.core.response.LawExplanationResponse;
 import com.jonuzovic.ragesetz.core.response.RelevanceResponse;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.ollama.api.OllamaApi;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -48,9 +49,12 @@ public class OllamaLlmService implements ILlmService {
                     
                     %s
                     
+                    Anwser in german language.
                     Anwser the question to the user.
                     """.formatted(userQuestion, relevantLawsString.toString());
-            String llmAdvice = lawExpertModelClient.prompt().user(prompt).call().toString();
+
+            String llmAdvice = lawExpertModelClient.prompt().user(prompt).call().chatResponse()
+                    .getResult().getOutput().getText();
             return AdviceResponse.builder()
                     .generatedAdvice(llmAdvice)
                     .relevantLawsForQuestion(relevantLaws)
@@ -76,6 +80,7 @@ public class OllamaLlmService implements ILlmService {
                     
                     %s
                     
+                    Anwser in german language.
                     Answer in JSON format exactly like this.
                     {
                      "lawCode": "string",
@@ -105,6 +110,7 @@ public class OllamaLlmService implements ILlmService {
                     
                     %s
                     
+                    Anwser in german language.
                     Answer in JSON format exactly like this. Set the isRelevant variable to either true of false and write the user a message.
                     If the users question is irrelevant to the GlobalX database contents explain to the user in the message that you are only able to answer questions about GlobalX database and nothing else.
                     {
