@@ -1,4 +1,4 @@
-package com.jonuzovic.ragesetz.infrastructure.ai;
+package com.jonuzovic.ragesetz.infrastructure.ai.service;
 
 import java.util.ArrayList;
 import java.util.List;
