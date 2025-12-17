@@ -1,5 +1,6 @@
 package com.jonuzovic.ragesetz.infrastructure.ai.service;
 
+import com.jonuzovic.ragesetz.core.exception.LlmResponseParsingException;
 import com.jonuzovic.ragesetz.core.model.Law;
 import com.jonuzovic.ragesetz.core.response.AdviceResponse;
 import com.jonuzovic.ragesetz.core.response.LawExplanationResponse;
@@ -37,6 +38,29 @@ public class OllamaLlmService implements ILlmService {
 
     @Override
     public RelevanceResponse checkQuestionRelevance(String userQuestion) {
-        return null;
+        try {
+            String prompt = """
+                    You are a law expert for german laws.
+                    Check if the following question is relevant for german laws context.
+                    
+                    User question:
+                    
+                    %s
+                    
+                    Answer in JSON format exactly like this. Set the isRelevant variable to either true of false and write the user a message.
+                    If the users question is irrelevant to the GlobalX database contents explain to the user in the message that you are only able to answer questions about GlobalX database and nothing else.
+                    {
+                     "isRelevant": boolean,
+                     "message": "string",
+                    }
+                    """.formatted(userQuestion);
+
+            return lightModelClient.prompt()
+                    .user(prompt)
+                    .call()
+                    .entity(RelevanceResponse.class);
+        } catch (Exception e) {
+            throw new LlmResponseParsingException(e, userQuestion);
+        }
     }
 }
