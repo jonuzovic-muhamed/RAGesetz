@@ -54,13 +54,33 @@ public class LawDao implements IEmbeddingRepository, ICrudRepository {
 		return results.isEmpty() ? Optional.empty() : Optional.of(results.getFirst());
 	}
 	
-	public Optional<Law> findByLawCode(String lawCode) {
+	public List<Law> findLawsByLawCode(String lawCode) {
 		String sql = """
-                SELECT * FROM embeddings.law WHERE law_code = ?;
+                SELECT * FROM embeddings.law WHERE law_code LIKE ?;
                 """;
-		List<Law> results = jdbcTemplate.query(sql, mapper, lawCode);
-		return results.isEmpty() ? Optional.empty() : Optional.of(results.getFirst());
+        String parameter = "%" + lawCode + "%";
+        List<Law> result = jdbcTemplate.query(sql, mapper, parameter);
+		return result;
 	}
+
+    public List<Law> findByLawTitle(String lawTitle) {
+        String sql = """
+                SELECT * FROM embeddings.law WHERE law_title LIKE ? ;
+                """;
+        String parameter = "%" + lawTitle + "%";
+        List<Law> result = jdbcTemplate.query(sql, mapper, parameter);
+        return result;
+    }
+
+    public Optional<Law> findByLawCodeAndSectionNumber(String lawCode, String sectionNumber) {
+        String sql = """
+                SELECT * FROM embeddings.law WHERE law_code LIKE ? AND law_section_number LIKE ?;
+                """;
+        String lawCodeParameter = "%" + lawCode + "%";
+        String sectionNumberParameter = "%" + sectionNumber + "%";
+        List<Law> result = jdbcTemplate.query(sql, mapper, lawCodeParameter, sectionNumberParameter);
+        return result.isEmpty() ? Optional.empty() : Optional.of(result.getFirst());
+    }
 
 	@Override
 	public void update(Law law) {
