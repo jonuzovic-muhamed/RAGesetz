@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface ILlmService {
     AdviceResponse giveAdvice(String userQuestion, List<Law> relevantLaws);
-    LawExplanationResponse explainLaw(String userQuestion, Law law);
+    LawExplanationResponse explainLaw(String userQuestion, String lawAsString);
     RelevanceResponse checkQuestionRelevance(String userQuestion);
 }

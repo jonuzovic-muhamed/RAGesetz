@@ -73,7 +73,7 @@ public class OllamaLlmService implements ILlmService {
     }
 
     @Override
-    public LawExplanationResponse explainLaw(String userQuestion, Law law) {
+    public LawExplanationResponse explainLaw(String userQuestion, String lawAsString) {
         try {
             String prompt = """
                     You are a law expert for german laws.
@@ -96,7 +96,7 @@ public class OllamaLlmService implements ILlmService {
                      "lawContent": "string",
                      "generatedExplanation": "string"
                     }
-                    """.formatted(userQuestion, law.toString());
+                    """.formatted(userQuestion, lawAsString);
             return lawExpertModelClient.prompt()
                     .user(prompt)
                     .call()
