@@ -15,5 +15,6 @@ public interface ICrudRepository {
     Long deleteById(Long id);
 
     void deleteAll();
-    
+
+    Optional<Law> findByLawCodeAndSectionNumber(String lawCode, String sectionNumber);
 }

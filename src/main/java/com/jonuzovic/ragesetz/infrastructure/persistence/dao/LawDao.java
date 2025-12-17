@@ -72,6 +72,7 @@ public class LawDao implements IEmbeddingRepository, ICrudRepository {
         return result;
     }
 
+    @Override
     public Optional<Law> findByLawCodeAndSectionNumber(String lawCode, String sectionNumber) {
         String sql = """
                 SELECT * FROM embeddings.law WHERE law_code LIKE ? AND law_section_number LIKE ?;
