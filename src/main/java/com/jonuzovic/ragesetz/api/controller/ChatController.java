@@ -1,6 +1,7 @@
 package com.jonuzovic.ragesetz.api.controller;
 
 import com.jonuzovic.ragesetz.api.dto.AdviceResponseDto;
+import com.jonuzovic.ragesetz.api.dto.LawExplanationRequestDto;
 import com.jonuzovic.ragesetz.api.dto.LawExplanationResponseDto;
 import com.jonuzovic.ragesetz.api.mapper.impl.AdviceResponseDtoMapper;
 import com.jonuzovic.ragesetz.api.mapper.impl.LawExplanationResponseDtoMapper;
@@ -33,10 +34,13 @@ public class ChatController {
     }
 
     @PostMapping("/explain")
-    public ResponseEntity<LawExplanationResponseDto> explain(@RequestBody String userQuestion, @RequestBody String lawCode, @RequestBody String lawSectionNumber) {
+    public ResponseEntity<LawExplanationResponseDto> explain(@RequestBody LawExplanationRequestDto lawExplanationRequestDto) {
         return ResponseEntity.ok(
                 lawExplanationResponseDtoMapper.mapToDto(
-                        chatService.askForLawExplanation(userQuestion, lawCode, lawSectionNumber)
+                        chatService.askForLawExplanation(
+                                lawExplanationRequestDto.getUserQuestion(),
+                                lawExplanationRequestDto.getLawCode(),
+                                lawExplanationRequestDto.getLawSectionNumber())
                 )
         );
     }
