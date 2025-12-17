@@ -3,12 +3,7 @@ package com.jonuzovic.ragesetz.core.model;
 import java.sql.Timestamp;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -16,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode
+@ToString(exclude = "id, lawEmbedding, createdAt")
 public class Law {
 	private Long id;
 	private String lawCode;
