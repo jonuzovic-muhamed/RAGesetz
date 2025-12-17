@@ -1,6 +1,6 @@
 package com.jonuzovic.ragesetz.core.response;
 
-import com.jonuzovic.ragesetz.api.dto.LawDto;
+import com.jonuzovic.ragesetz.core.model.Law;
 import lombok.*;
 
 import java.util.List;
@@ -12,5 +12,5 @@ import java.util.List;
 @EqualsAndHashCode
 public class AdviceResponse {
     private String generatedAdvice;
-    private List<LawDto> relevantLawsForQuestion;
+    private List<Law> relevantLawsForQuestion;
 }
