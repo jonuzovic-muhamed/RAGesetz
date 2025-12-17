@@ -2,6 +2,7 @@ package com.jonuzovic.ragesetz.infrastructure.runner;
 
 import java.util.List;
 
+import com.jonuzovic.ragesetz.core.repository.IEmbeddingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,19 +18,22 @@ public class LawEmbedderStartupRunner implements CommandLineRunner {
 	
 	private final Logger log = LoggerFactory.getLogger(LawEmbedderStartupRunner.class);
 	
-	private ILawEmbedder lawEmbedder;
-	private ILawParser lawParser;
+	private final ILawEmbedder lawEmbedder;
+	private final ILawParser lawParser;
+    private final IEmbeddingRepository embeddingRepository;
 	
 	public LawEmbedderStartupRunner(
-			@Qualifier("lawEmbdedderService") ILawEmbedder lawEmbedder,
-			@Qualifier("htmlLawParser") ILawParser lawParser) {
+            @Qualifier("lawEmbdedderService") ILawEmbedder lawEmbedder,
+            @Qualifier("htmlLawParser") ILawParser lawParser,
+            @Qualifier("lawDao") IEmbeddingRepository embeddingRepository) {
 		super();
 		this.lawEmbedder = lawEmbedder;
 		this.lawParser = lawParser;
-	}
+        this.embeddingRepository = embeddingRepository;
+    }
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 		log.info("Started embedding process!");
 		long startTime = System.currentTimeMillis();
 		lawParser.downloadLawsFromSources();
